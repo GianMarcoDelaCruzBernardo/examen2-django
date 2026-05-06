@@ -1,8 +1,6 @@
 ﻿from pathlib import Path
 import os
 import dj_database_url
-from decouple import config
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-local-solo-desarrollo')
