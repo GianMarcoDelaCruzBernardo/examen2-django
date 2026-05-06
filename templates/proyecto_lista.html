@@ -1,0 +1,46 @@
+﻿{% extends 'base.html' %}
+{% block title %}Proyectos{% endblock %}
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+  <div>
+    <h2 class="fw-bold mb-1"><i class="bi bi-folder2-open me-2"></i>Proyectos</h2>
+    <p class="mb-0 opacity-75">{{ proyectos.count }} proyecto{{ proyectos.count|pluralize }}</p>
+  </div>
+  <a href="{% url 'proyecto_crear' %}" class="btn btn-light fw-semibold">
+    <i class="bi bi-plus-lg me-1"></i>Nuevo Proyecto
+  </a>
+</div>
+{% if proyectos %}
+<div class="row g-4">
+  {% for p in proyectos %}
+  <div class="col-sm-6 col-lg-4 col-xl-3">
+    <div class="card h-100">
+      {% if p.imagen %}
+        <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.nombre }}">
+      {% else %}
+        <div class="img-placeholder"><i class="bi bi-image text-secondary" style="font-size:3rem"></i></div>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="fw-bold mb-1">{{ p.nombre }}</h5>
+        <p class="text-muted small mb-2">{{ p.descripcion|truncatewords:12 }}</p>
+        <span class="badge {% if p.estado == 'activo' %}bg-success{% elif p.estado == 'pausado' %}bg-warning text-dark{% elif p.estado == 'completado' %}bg-info text-dark{% else %}bg-danger{% endif %}">
+          {{ p.get_estado_display }}
+        </span>
+        {% if p.fecha_inicio %}<p class="text-muted small mt-2 mb-0"><i class="bi bi-calendar3 me-1"></i>{{ p.fecha_inicio }}</p>{% endif %}
+      </div>
+      <div class="card-footer bg-white border-0 d-flex gap-2 pb-3">
+        <a href="{% url 'proyecto_detalle' p.pk %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye me-1"></i>Ver</a>
+        <a href="{% url 'proyecto_editar' p.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil me-1"></i>Editar</a>
+        <a href="{% url 'proyecto_eliminar' p.pk %}" class="btn btn-outline-danger btn-sm ms-auto"><i class="bi bi-trash"></i></a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+  <i class="bi bi-inbox display-1 text-muted"></i>
+  <p class="mt-3 text-muted">No hay proyectos. <a href="{% url 'proyecto_crear' %}" class="text-decoration-none fw-semibold">Crea el primero</a></p>
+</div>
+{% endif %}
+{% endblock %}

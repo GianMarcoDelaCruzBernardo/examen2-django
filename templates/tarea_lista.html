@@ -1,0 +1,38 @@
+﻿{% extends 'base.html' %}
+{% block title %}Tareas{% endblock %}
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+  <div>
+    <h2 class="fw-bold mb-1"><i class="bi bi-check2-square me-2"></i>Tareas</h2>
+    <p class="mb-0 opacity-75">{{ tareas.count }} tarea{{ tareas.count|pluralize }}</p>
+  </div>
+  <a href="{% url 'tarea_crear' %}" class="btn btn-light fw-semibold"><i class="bi bi-plus-lg me-1"></i>Nueva Tarea</a>
+</div>
+{% if tareas %}
+<div class="row g-3">
+  {% for t in tareas %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 p-3">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <h6 class="fw-bold mb-0">{{ t.titulo }}</h6>
+        <span class="badge {% if t.estado == 'completada' %}bg-success{% elif t.estado == 'en_progreso' %}bg-primary{% elif t.estado == 'cancelada' %}bg-danger{% else %}bg-secondary{% endif %}">{{ t.get_estado_display }}</span>
+      </div>
+      <p class="text-muted small mb-2">{{ t.descripcion|truncatewords:10 }}</p>
+      <small class="text-muted"><i class="bi bi-folder2 me-1"></i>{{ t.proyecto }}</small>
+      {% if t.fecha_limite %}<small class="text-muted d-block"><i class="bi bi-clock me-1"></i>{{ t.fecha_limite }}</small>{% endif %}
+      <div class="mt-auto pt-3 d-flex gap-2">
+        <a href="{% url 'tarea_detalle' t.pk %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye me-1"></i>Ver</a>
+        <a href="{% url 'tarea_editar' t.pk %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil me-1"></i>Editar</a>
+        <a href="{% url 'tarea_eliminar' t.pk %}" class="btn btn-outline-danger btn-sm ms-auto"><i class="bi bi-trash"></i></a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+  <i class="bi bi-inbox display-1 text-muted"></i>
+  <p class="mt-3 text-muted">No hay tareas. <a href="{% url 'tarea_crear' %}" class="text-decoration-none fw-semibold">Crea la primera</a></p>
+</div>
+{% endif %}
+{% endblock %}
