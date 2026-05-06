@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% load cloudinary %}
 {% block title %}{{ proyecto.nombre }}{% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb" class="mb-4">
@@ -15,7 +16,7 @@
       <!-- Imagen con mejor manejo -->
       {% if proyecto.imagen %}
         <div class="position-relative overflow-hidden bg-light" style="height: 280px;">
-          <img src="{{ proyecto.imagen.url }}" class="w-100 h-100 object-fit-cover" alt="{{ proyecto.nombre }}">
+          {% cloudinary proyecto.imagen width=300 height=200 crop='fill' %}
         </div>
       {% else %}
         <div class="img-placeholder d-flex flex-column align-items-center justify-content-center bg-light" style="height: 280px;">
