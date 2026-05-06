@@ -17,7 +17,7 @@
   <div class="col-sm-6 col-lg-4 col-xl-3">
     <div class="card h-100">
       {% if p.imagen %}
-        <img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.nombre }}">
+        {% cloudinary proyecto.imagen width=300 height=200 crop="fill" %}
       {% else %}
         <div class="img-placeholder"><i class="bi bi-image text-secondary" style="font-size:3rem"></i></div>
       {% endif %}
