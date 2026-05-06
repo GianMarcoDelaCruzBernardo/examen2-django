@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 import os
 import dj_database_url
 
@@ -9,7 +9,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com', 'examen2-django.onrender.com']
 
 INSTALLED_APPS = [
-    'unfold',  # UNFOLD PRIMERO
+    'unfold',
     'unfold.contrib.filters',
     'unfold.contrib.forms',
     'django.contrib.admin',
@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'proyectos',
 ]
 
@@ -52,7 +54,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gestion.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600)
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -71,15 +76,19 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
+import cloudinary
+cloudinary.config(secure=True)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CONFIGURACIÓN UNFOLD
 UNFOLD = {
-    "SITE_TITLE": "Gestión de Proyectos",
-    "SITE_HEADER": "Gestión de Proyectos",
+    "SITE_TITLE": "Gestion de Proyectos",
+    "SITE_HEADER": "Gestion de Proyectos",
     "SITE_URL": "/",
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
