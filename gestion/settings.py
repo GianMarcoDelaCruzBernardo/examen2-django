@@ -1,9 +1,10 @@
 ﻿from pathlib import Path
 import os
 import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-local-solo-desarrollo')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-clave-local')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
@@ -15,9 +16,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'proyectos',
-    'unfold',
-    'unfold.contrib.filters',
-    'unfold.contrib.forms',
 ]
 
 MIDDLEWARE = [
@@ -74,18 +72,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Configuración de Unfold
-UNFOLD = {
-    "SITE_TITLE": "Gestión de Proyectos",
-    "SITE_HEADER": "Gestión de Proyectos",
-    "SITE_URL": "/",
-    "SHOW_HISTORY": True,
-    "SHOW_VIEW_ON_SITE": True,
-}
-
-
-    'CLOUD_NAME': 'dntc75yjs',
-    'API_KEY': '297948778844364',
-    'API_SECRET': '5vCbvJ4vKmXT3aMtCbbnU5o3Ug',
-}
