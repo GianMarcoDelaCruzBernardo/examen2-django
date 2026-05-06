@@ -11,9 +11,6 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
-    'cloudinary',
-    'cloudinary_storage',
-    
     'proyectos',
     'unfold',
     'unfold.contrib.filters',
@@ -94,19 +91,3 @@ UNFOLD = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# ============================================
-# CONFIGURACIÓN DE CLOUDINARY PARA IMÁGENES
-# ============================================
-import os
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dntc75yjs',
-    'API_KEY': '297948778844364',
-    'API_SECRET': '5vCbvJ4vKmXT3aMtCbbnU5o3Ug',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-# Configuración de Media (para respaldo)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
