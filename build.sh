@@ -58,3 +58,16 @@ user.is_staff = True;
 user.save();
 print(f'{"✅ CREADO" if created else "✅ VERIFICADO"} superusuario admin (pass: admin)')
 EOF
+
+
+# Crear superusuario admin/admin automáticamente
+echo ">>> Creando superusuario admin..."
+python manage.py shell <<EOF
+from django.contrib.auth import get_user_model;
+User = get_user_model();
+if not User.objects.filter(username='admin').exists():
+    User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+    print("✅ Superusuario admin creado")
+else:
+    print("✅ Superusuario admin ya existe")
+EOF
