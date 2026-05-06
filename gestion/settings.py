@@ -92,15 +92,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Cloudinary Configuration
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
-cloudinary.config(
     cloud_name = 'dntc75yjs',
     api_key = '297948778844364',
     api_secret = '5vCbvJ4vKmXT3aMtCbbnU5o3Ug',
     secure = True
 )
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

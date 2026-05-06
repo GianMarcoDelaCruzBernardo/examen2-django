@@ -1,5 +1,4 @@
 ﻿{% extends 'base.html' %}
-{% load cloudinary %}
 {% block title %}Proyectos{% endblock %}
 {% block content %}
 <div class="page-header d-flex justify-content-between align-items-center">
@@ -18,9 +17,9 @@
   <div class="col-sm-6 col-lg-4 col-xl-3">
     <div class="card h-100 shadow-sm">
       {% if p.imagen %}
-        {% cloudinary p.imagen width=400 height=200 crop="fill" class="card-img-top" style="height: 200px; object-fit: cover; width: 100%;" %}
+        <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 200px; object-fit: cover; width: 100%;" alt="{{ p.nombre }}">
       {% else %}
-        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 200px;">
+        <div class="d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
           <i class="bi bi-image fs-1 text-secondary"></i>
         </div>
       {% endif %}
