@@ -11,8 +11,7 @@ class Proyecto(models.Model):
 
     nombre       = models.CharField(max_length=200, verbose_name='Nombre')
     descripcion  = models.TextField(blank=True, verbose_name='Descripcion')
-    imagen       = models.ImageField(upload_to='proyectos/', blank=True, null=True,
-                                     verbose_name='Imagen del proyecto')
+    imagen       = models.URLField(blank=True, null=True, verbose_name='Imagen del proyecto')
     fecha_inicio = models.DateField(verbose_name='Fecha de inicio')
     fecha_fin    = models.DateField(null=True, blank=True, verbose_name='Fecha de fin')
     estado       = models.CharField(max_length=20, choices=ESTADO_CHOICES,

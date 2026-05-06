@@ -1,7 +1,22 @@
-﻿from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Proyecto, Tarea
 from .forms  import ProyectoForm, TareaForm
+import cloudinary.uploader
+
+
+def subir_imagen_cloudinary(archivo):
+    """Sube un archivo a Cloudinary y retorna la URL segura."""
+    try:
+        resultado = cloudinary.uploader.upload(
+            archivo,
+            folder='proyectos',
+            resource_type='image'
+        )
+        return resultado.get('secure_url', '')
+    except Exception as e:
+        print(f"Error Cloudinary: {e}")
+        return ''
 
 
 # ── Proyecto ────────────────────────────────────────────────
@@ -21,7 +36,12 @@ def proyecto_crear(request):
     if request.method == 'POST':
         form = ProyectoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            proyecto = form.save(commit=False)
+            if 'imagen' in request.FILES:
+                url = subir_imagen_cloudinary(request.FILES['imagen'])
+                if url:
+                    proyecto.imagen = url
+            proyecto.save()
             messages.success(request, 'Proyecto creado correctamente.')
             return redirect('proyecto_lista')
     else:
@@ -35,7 +55,12 @@ def proyecto_editar(request, pk):
     if request.method == 'POST':
         form = ProyectoForm(request.POST, request.FILES, instance=proyecto)
         if form.is_valid():
-            form.save()
+            proyecto = form.save(commit=False)
+            if 'imagen' in request.FILES:
+                url = subir_imagen_cloudinary(request.FILES['imagen'])
+                if url:
+                    proyecto.imagen = url
+            proyecto.save()
             messages.success(request, 'Proyecto actualizado.')
             return redirect('proyecto_lista')
     else:
