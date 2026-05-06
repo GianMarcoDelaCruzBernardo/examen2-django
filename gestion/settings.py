@@ -8,8 +8,6 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
-    'cloudinary',
-    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,10 +85,7 @@ UNFOLD = {
 }
 
 
-# Cloudinary Configuration
-CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dntc75yjs',
     'API_KEY': '297948778844364',
     'API_SECRET': '5vCbvJ4vKmXT3aMtCbbnU5o3Ug',
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

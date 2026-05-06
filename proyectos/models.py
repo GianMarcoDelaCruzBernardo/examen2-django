@@ -1,7 +1,4 @@
 ﻿from django.db import models
-from cloudinary.models import CloudinaryField
-
-
 class Proyecto(models.Model):
     ESTADO_CHOICES = [
         ('activo',     'Activo'),
