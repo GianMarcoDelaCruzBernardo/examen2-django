@@ -21,4 +21,4 @@ else:
     print("✅ Superusuario admin ya existe")
 EOF
 
-echo ">>> Build finalizado exitosamente!"
+echo ">>> Build completado exitosamente!"
