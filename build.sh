@@ -43,3 +43,18 @@ if created:
 else:
     print("✅ Superusuario admin VERIFICADO y contraseña actualizada")
 EOF
+
+
+
+# SUPERUSUARIO PERMANENTE admin/admin
+echo ">>> Creando/verificando superusuario admin..."
+python manage.py shell <<EOF
+from django.contrib.auth import get_user_model;
+User = get_user_model();
+user, created = User.objects.get_or_create(username='admin', defaults={'email': 'admin@example.com', 'is_superuser': True, 'is_staff': True});
+user.set_password('admin');
+user.is_superuser = True;
+user.is_staff = True;
+user.save();
+print(f'{"✅ CREADO" if created else "✅ VERIFICADO"} superusuario admin (pass: admin)')
+EOF
