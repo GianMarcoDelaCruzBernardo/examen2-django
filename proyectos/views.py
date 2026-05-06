@@ -3,19 +3,23 @@ from django.contrib import messages
 from .models import Proyecto, Tarea
 from .forms  import ProyectoForm, TareaForm
 import cloudinary.uploader
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def subir_imagen_cloudinary(archivo):
-    """Sube un archivo a Cloudinary y retorna la URL segura."""
     try:
         resultado = cloudinary.uploader.upload(
             archivo,
             folder='proyectos',
             resource_type='image'
         )
-        return resultado.get('secure_url', '')
+        url = resultado.get('secure_url', '')
+        logger.warning(f"CLOUDINARY OK: {url}")
+        return url
     except Exception as e:
-        print(f"Error Cloudinary: {e}")
+        logger.warning(f"CLOUDINARY ERROR: {e}")
         return ''
 
 
@@ -35,12 +39,18 @@ def proyecto_detalle(request, pk):
 def proyecto_crear(request):
     if request.method == 'POST':
         form = ProyectoForm(request.POST, request.FILES)
+        logger.warning(f"FILES en crear: {list(request.FILES.keys())}")
         if form.is_valid():
             proyecto = form.save(commit=False)
             if 'imagen' in request.FILES:
                 url = subir_imagen_cloudinary(request.FILES['imagen'])
                 if url:
                     proyecto.imagen = url
+                    logger.warning(f"imagen guardada: {url}")
+                else:
+                    logger.warning("imagen NO guardada - url vacia")
+            else:
+                logger.warning("No hay FILES['imagen']")
             proyecto.save()
             messages.success(request, 'Proyecto creado correctamente.')
             return redirect('proyecto_lista')
@@ -54,12 +64,18 @@ def proyecto_editar(request, pk):
     proyecto = get_object_or_404(Proyecto, pk=pk)
     if request.method == 'POST':
         form = ProyectoForm(request.POST, request.FILES, instance=proyecto)
+        logger.warning(f"FILES en editar: {list(request.FILES.keys())}")
         if form.is_valid():
             proyecto = form.save(commit=False)
             if 'imagen' in request.FILES:
                 url = subir_imagen_cloudinary(request.FILES['imagen'])
                 if url:
                     proyecto.imagen = url
+                    logger.warning(f"imagen guardada: {url}")
+                else:
+                    logger.warning("imagen NO guardada - url vacia")
+            else:
+                logger.warning("No hay FILES['imagen']")
             proyecto.save()
             messages.success(request, 'Proyecto actualizado.')
             return redirect('proyecto_lista')
