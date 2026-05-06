@@ -1,31 +1,30 @@
 ﻿from pathlib import Path
 import os
 import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-local-solo-desarrollo')
-
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 INSTALLED_APPS = [
-    'proyectos',
-    'unfold',
-    'unfold.contrib.filters',
-    'unfold.contrib.forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'proyectos',
+    'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- nuevo
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,12 +52,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gestion.wsgi.application'
 
-# Base de datos: PostgreSQL en Render, SQLite en local
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600,
-    )
+    'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600)
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,6 +75,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuración de Unfold
 UNFOLD = {
     "SITE_TITLE": "Gestión de Proyectos",
     "SITE_HEADER": "Gestión de Proyectos",
@@ -87,15 +85,3 @@ UNFOLD = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
 }
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Cloudinary Configuration
-
-    cloud_name = 'dntc75yjs',
-    api_key = '297948778844364',
-    api_secret = '5vCbvJ4vKmXT3aMtCbbnU5o3Ug',
-    secure = True
-)
-
