@@ -5,7 +5,7 @@
   <div class="col-md-5">
     <div class="card shadow-sm border-0">
       {% if proyecto.imagen %}
-        <img src="{{ proyecto.imagen.url }}" style="height:280px;object-fit:cover;width:100%;" alt="{{ proyecto.nombre }}" class="card-img-top">
+        <img src="{{ proyecto.imagen }}" style="height:280px;object-fit:cover;width:100%;" alt="{{ proyecto.nombre }}" class="card-img-top">
       {% else %}
         <div class="bg-light text-center d-flex align-items-center justify-content-center" style="height:280px;">
           <div><i class="bi bi-image fs-1 text-muted"></i><p class="mt-2 text-muted">Sin imagen</p></div>

@@ -16,7 +16,7 @@
   <div class="col-sm-6 col-lg-4 col-xl-3">
     <div class="card h-100 shadow-sm">
       {% if p.imagen %}
-        <img src="{{ p.imagen.url }}" style="height:200px;width:100%;object-fit:cover;" alt="{{ p.nombre }}">
+        <img src="{{ p.imagen }}" style="height:200px;width:100%;object-fit:cover;" alt="{{ p.nombre }}">
       {% else %}
         <div class="bg-light d-flex align-items-center justify-content-center" style="height:200px;">
           <i class="bi bi-image fs-1 text-secondary"></i>
